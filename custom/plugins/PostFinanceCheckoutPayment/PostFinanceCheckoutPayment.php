@@ -99,7 +99,6 @@ class PostFinanceCheckoutPayment extends Plugin
         $widget = new Widget();
         $widget->setName('postFinanceCheckout-payment-manual-tasks');
         $widget->setPlugin($plugin);
-        $widget->setLabel('PostFinance Checkout Payment - Manual Tasks');
         $plugin->getWidgets()->add($widget);
     }
 
