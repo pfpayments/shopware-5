@@ -15,7 +15,7 @@
 	<script type="text/javascript" src="{$postFinanceCheckoutPaymentJavascriptUrl}"></script>
 	<script type="text/javascript">
 	var ShopwarePostFinanceCheckoutCheckoutInit = function(){
-		ShopwarePostFinanceCheckout.Checkout.init('postfinancecheckout_payment_method_form', '{$postFinanceCheckoutPaymentConfigurationId}', '{url controller='PostFinanceCheckoutPaymentCheckout' action='saveOrder'}');
+		ShopwarePostFinanceCheckout.Checkout.init('postfinancecheckout_payment_method_form', '{$postFinanceCheckoutPaymentConfigurationId}', '{url controller='PostFinanceCheckoutPaymentCheckout' action='saveOrder'}', '{$postFinanceCheckoutPaymentPageUrl}');
 	};
 	{if $theme.asyncJavascriptLoading}
 		if (typeof document.asyncReady == 'function') {

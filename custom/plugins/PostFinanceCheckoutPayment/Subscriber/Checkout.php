@@ -114,6 +114,7 @@ class Checkout implements SubscriberInterface
                     $view->extendsTemplate('frontend/checkout/postfinancecheckout_payment/confirm.tpl');
 
                     $view->assign('postFinanceCheckoutPaymentJavascriptUrl', $this->transactionService->getJavaScriptUrl());
+                    $view->assign('postFinanceCheckoutPaymentPageUrl', $this->transactionService->getPaymentPageUrl());
                     $view->assign('postFinanceCheckoutPaymentConfigurationId', $paymentMethodConfiguration->getConfigurationId());
 
                     $userFailureMessage = $this->getUserFailureMessage();
