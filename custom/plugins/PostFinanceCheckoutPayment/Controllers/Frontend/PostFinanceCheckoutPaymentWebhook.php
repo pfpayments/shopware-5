@@ -13,19 +13,9 @@
 use PostFinanceCheckoutPayment\Components\Webhook\Request as WebhookRequest;
 use Shopware\Components\CSRFWhitelistAware;
 use PostFinanceCheckoutPayment\Components\Controller\Frontend;
-use Psr\Log\LoggerInterface;
 
 class Shopware_Controllers_Frontend_PostFinanceCheckoutPaymentWebhook extends Frontend implements CSRFWhitelistAware
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-    
-    public function __construct(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
-    }
     
     public function getWhitelistedCSRFActions()
     {
@@ -53,10 +43,10 @@ class Shopware_Controllers_Frontend_PostFinanceCheckoutPaymentWebhook extends Fr
                 $this->Response()->setHttpResponseCode(200);
             }
         } catch (\PostFinanceCheckoutPayment\Components\Webhook\Exception $e) {
-            $this->logger->critical($e);
+            $this->get('corelogger')->critical($e);
             echo $e->getMessage();
         } catch (\Exception $e) {
-            $this->logger->critical($e);
+            $this->get('corelogger')->critical($e);
             echo $e->getMessage();
         }
     }
