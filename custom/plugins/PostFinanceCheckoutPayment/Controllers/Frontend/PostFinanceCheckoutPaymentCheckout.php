@@ -14,6 +14,10 @@ class Shopware_Controllers_Frontend_PostFinanceCheckoutPaymentCheckout extends S
 {
     private $_orderNumber;
     
+    private $_forward;
+    
+    private $_requestParams = array();
+    
     public function preDispatch()
     {
         parent::preDispatch();
@@ -34,7 +38,9 @@ class Shopware_Controllers_Frontend_PostFinanceCheckoutPaymentCheckout extends S
         $this->_orderNumber = null;
         $backup = $this->get('postfinancecheckout_payment.basket')->backupBasket();
         $this->finishAction();
-        $this->get('postfinancecheckout_payment.basket')->restoreBasket($backup);
+        if ($this->_forward !== 'confirm') {
+            $this->get('postfinancecheckout_payment.basket')->restoreBasket($backup);
+        }
         if ($this->_orderNumber != null) {
             $this->get('postfinancecheckout_payment.registry')->set('disable_risk_management', true);
             $this->get('modules')->Order()->sCreateTemporaryOrder();
@@ -42,6 +48,20 @@ class Shopware_Controllers_Frontend_PostFinanceCheckoutPaymentCheckout extends S
             echo json_encode([
                 'result' => 'success'
             ]);
+        } else {
+            if (isset($this->_requestParams['voucherErrors'])) {
+                ob_clean();
+                echo json_encode([
+                    'result' => 'error',
+                    'error' => current($this->_requestParams['voucherErrors'])
+                ]);
+            } elseif (isset($this->_requestParams['agreementErrors']['agbError'])) {
+                ob_clean();
+                echo json_encode([
+                    'result' => 'error',
+                    'error' => 'agbError'
+                ]);
+            }
         }
         ob_end_flush();
     }
@@ -55,5 +75,7 @@ class Shopware_Controllers_Frontend_PostFinanceCheckoutPaymentCheckout extends S
 
     public function forward($action, $controller = null, $module = null, array $params = null)
     {
+        $this->_forward = $action;
+        $this->_requestParams = $params;
     }
 }
