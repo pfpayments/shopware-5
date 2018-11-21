@@ -26,6 +26,7 @@ use PostFinanceCheckout\Sdk\Model\EntityQueryFilterType;
 use PostFinanceCheckout\Sdk\Model\EntityQueryOrderByType;
 use PostFinanceCheckout\Sdk\Model\TransactionState;
 use Shopware\Models\Customer\Customer;
+use PostFinanceCheckout\Sdk\ApiException;
 
 class Transaction extends AbstractService
 {
@@ -258,9 +259,13 @@ class Transaction extends AbstractService
                 $paymentMethods = $session['postfinancecheckout_payment.possible_payment_methods'];
             } else {
                 $transaction = $this->getTransactionByBasket();
-                $paymentMethods = $this->callApi($this->apiClient, function () use ($transaction) {
-                    return $this->transactionService->fetchPossiblePaymentMethods($transaction->getLinkedSpaceId(), $transaction->getId());
-                });
+                try {
+                    $paymentMethods = $this->callApi($this->apiClient, function () use ($transaction) {
+                        return $this->transactionService->fetchPossiblePaymentMethods($transaction->getLinkedSpaceId(), $transaction->getId());
+                    });
+                } catch (ApiException $e) {
+                    self::$possiblePaymentMethodByBasketCache = [];
+                }
                 
                 foreach ($paymentMethods as $paymentMethod) {
                     $this->paymentMethodConfigurationService->updateData($paymentMethod);
@@ -424,9 +429,9 @@ class Transaction extends AbstractService
             $this->assembleTransactionData($pendingTransaction, $order);
             
             if ($confirm) {
-                $updatedTransaction = $this->transactionService->confirm($spaceId, $pendingTransaction);
+                $this->transactionService->confirm($spaceId, $pendingTransaction);
             } else {
-                $updatedTransaction = $this->transactionService->update($spaceId, $pendingTransaction);
+                $this->transactionService->update($spaceId, $pendingTransaction);
             }
             
             $this->updateOrCreateTransactionMapping($transaction, $order);
@@ -506,7 +511,7 @@ class Transaction extends AbstractService
     }
     
     private function generateTransactionHash($spaceId, $transactionId, \PostFinanceCheckout\Sdk\Model\AbstractTransactionPending $transaction) {
-        $serializer = new \Wallee\Sdk\ObjectSerializer();
+        $serializer = new \PostFinanceCheckout\Sdk\ObjectSerializer();
         $sanitized = $serializer->sanitizeForSerialization($transaction);
         unset($sanitized->version);
         return $spaceId . '_' . $transactionId . '_' . \hash("sha256", \json_encode($sanitized));
