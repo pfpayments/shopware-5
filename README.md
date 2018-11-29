@@ -10,8 +10,8 @@ This repository contains the Shopware plugin that enables to process payments wi
 
 ## Documentation
 
-* [Documentation](https://plugin-documentation.postfinance-checkout.ch/pfpayments/shopware/1.0.32/docs/en/documentation.html)
+* [Documentation](https://plugin-documentation.postfinance-checkout.ch/pfpayments/shopware/1.0.33/docs/en/documentation.html)
 
 ## License
 
-Please see the [license file](https://github.com/pfpayments/shopware/blob/1.0.32/LICENSE) for more information.
+Please see the [license file](https://github.com/pfpayments/shopware/blob/1.0.33/LICENSE) for more information.
