@@ -1,5 +1,5 @@
-# PostFinance Checkout Shopware
-This repository contains the Shopware plugin that enables to process payments with [PostFinance Checkout](https://www.postfinance.ch/checkout/).
+# PostFinance Checkout Shopware 5
+This repository contains the Shopware 5 plugin that enables to process payments with [PostFinance Checkout](https://www.postfinance.ch/checkout/).
 
 ###### To use this extension, a [PostFinance Checkout](https://www.postfinance.ch/checkout/) account is required.
 
@@ -10,8 +10,8 @@ This repository contains the Shopware plugin that enables to process payments wi
 
 ## Documentation
 
-* [Documentation](https://plugin-documentation.postfinance-checkout.ch/pfpayments/shopware/1.0.60/docs/en/documentation.html)
+* [Documentation](https://plugin-documentation.postfinance-checkout.ch/pfpayments/shopware-5/1.0.61/docs/en/documentation.html)
 
 ## License
 
-Please see the [license file](https://github.com/pfpayments/shopware/blob/1.0.60/LICENSE) for more information.
+Please see the [license file](https://github.com/pfpayments/shopware-5/blob/1.0.61/LICENSE) for more information.
