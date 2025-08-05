@@ -1,6 +1,9 @@
 
 
 # PostFinance Checkout Shopware 5
+
+**This project is no longer actively maintained**
+
 This repository contains the Shopware 5 plugin that enables to process payments with [PostFinance Checkout](https://postfinance.ch/en/business/products/e-commerce/postfinance-checkout-all-in-one.html/).
 
 ###### To use this extension, a [PostFinance Checkout](https://checkout.postfinance.ch/en-ch/user/signup) account is required.
